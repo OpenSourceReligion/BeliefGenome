@@ -37,6 +37,15 @@ $(function() {
       .attr("r", 15)
       .attr("title",  function(d) { return d.name; })
       .style("fill", function(d) { return "#88e"; })
+      .on("mouseover", function(d) {
+        d3.select(this).style("fill", function(d) { return "#8e6"; });
+      })
+      .on("mouseout", function(d) {
+        d3.select(this).style("fill", function(d) { return "#88e"; });
+      })
+      .on("dblclick", function(d) {
+        $("#stack_display").append('<li>' + d.name + '</li>');
+      })
       .call(force.drag);
 
   force.nodes(data)
