@@ -1,0 +1,29 @@
+
+.lefty {
+  float: left;
+}
+
+#stack {
+  min-width: 100px;
+  min-height: 2em;
+  border: 1px solid gray;
+  padding: 3px;
+  margin: 1em;
+}
+
+#container {
+  margin: 1em;
+  border: 1px solid gray;
+}
+
+
+.node {
+  stroke: #00f;
+  stroke-width: 1.5px;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+
