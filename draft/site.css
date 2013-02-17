@@ -6,13 +6,16 @@
 #stack {
   min-width: 100px;
   min-height: 2em;
-  border: 1px solid gray;
-  padding: 3px;
-  margin: 1em;
+  padding-right: 1em;
 }
 
-#container {
+#stack_display {
+  margin-left: -1.25em;
+}
+
+.container {
   margin: 1em;
+  padding: 1em;
   border: 1px solid gray;
 }
 
@@ -25,5 +28,6 @@
 .link {
   stroke: #0D94D0;
   stroke-opacity: .6;
+  stroke-width: 3.5px;
 }
 

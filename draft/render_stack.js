@@ -20,12 +20,17 @@ function display_item(item, list) {
     var li = $('<li></li>');
     list.append(li);
     display_array(item, li);
+
   } else if (_.isString(item)) {
     list.append('<li>&quot;' + item + '&quot;');
-  } else if (_.isObject(item) &&
-             !_.isUndefined(item.kind) &&
-             item.kind == "belief") {
-    list.append('<li>Belief: ' + item.name);
+
+  } else if (_.isObject(item) && !_.isUndefined(item.kind)) {
+     if (item.kind == "belief") {
+       list.append('<li>Belief: ' + item.name);
+     } else if (item.kind == "link") {
+       list.append('<li>Link between ' + item.source.name + ' and ' + item.target.name);
+     }
+
   } else {
     list.append('<li>' + item);
   }
