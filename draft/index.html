@@ -6,6 +6,7 @@
 <script src="./underscore-min.js"></script>
 <script src="./jquery.min.js"></script>
 <script src="./xerblin.js"></script>
+<script src="./render_stack.js"></script>
 <script>
 
 var width = 1000, height = 618;
@@ -15,13 +16,19 @@ var belief_list = ['adequacy', 'anaseismic', 'antic', 'birdnester', 'brast', 'ci
 var beliefs = {}
 
 var data = _.map(belief_list, function(d) {
-  var it = {name:d};
+  var it = {name:d, kind:"belief"};
   beliefs[d] = it;
   return it;
 })
 
 
 $(function() {
+
+  var I = xerblin.create_new_interpreter();
+
+  function draw() {
+    render(I[0], $("#stack_display"));
+  }
 
   var the_svg = d3.select("#visual");
 
@@ -44,7 +51,8 @@ $(function() {
         d3.select(this).style("fill", function(d) { return "#0D94D0"; });
       })
       .on("dblclick", function(d) {
-        $("#stack_display").append('<li>' + d.name + '</li>');
+        I[0] = xerblin.push(I[0], d);
+        draw();
       })
       .call(force.drag);
 
