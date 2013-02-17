@@ -18,12 +18,12 @@
 
 
 .node {
-  stroke: #00f;
+  stroke: #eef;
   stroke-width: 1.5px;
 }
 
 .link {
-  stroke: #999;
+  stroke: #0D94D0;
   stroke-opacity: .6;
 }
 
