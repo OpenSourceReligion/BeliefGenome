@@ -185,11 +185,11 @@ $(function() {
 
   restart();  // This is the initial call to start animating the SVG on first load.
 
-  // Use jQuery to set up the hyperlink "button" to call the create_link
-  // command we added to the interpreter's dictionary above, and then
-  // update the Force Layout and the HTML stack display.
-  $("#button").click(function() {
-    interpreter = xerblin.interpret(interpreter, ["create_link"]);
+  // Use jQuery to set up the hyperlink "buttons" to call their command
+  // then update the Force Layout and the HTML stack display.
+  $(".command").click(function() {
+    var command = $(this).attr("command");
+    interpreter = xerblin.interpret(interpreter, [command]);
     restart();
     draw();
     return false;
