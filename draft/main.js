@@ -206,7 +206,32 @@ $(function() {
     // links array already.
   });
 
-  restart();  // This is the initial call to start animating the SVG on first load.
+
+  // Command words to lengthen and shorten a link between two beliefs.
+  //
+  // This is a helper that returns a Boolean indocating if a thing is a link.
+  function is_link(link) {
+    return (_.isObject(link) &&
+            !_.isUndefined(link.kind) &&
+            link.kind == "link");
+  }
+
+  interpreter[1] = xerblin.insert(interpreter[1], "increase_distance",
+  function increase_distance(I) {
+    var link = I[0][0];
+    if (is_link(link)) { link.distance *= 1.1; }
+    return I;
+  });
+
+  interpreter[1] = xerblin.insert(interpreter[1], "decrease_distance",
+  function decrease_distance(I) {
+    var link = I[0][0];
+    if (is_link(link)) { link.distance *= 0.9; }
+    return I;
+  });
+
+  // This is the initial call to start animating the SVG on first load.
+  restart();
 
   // Use jQuery to set up the hyperlink "buttons" to call their command
   // then update the Force Layout and the HTML stack display.
