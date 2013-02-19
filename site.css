@@ -19,6 +19,17 @@
   border: 1px solid gray;
 }
 
+a.command {
+  padding: 0.25em;
+  margin-bottom: 0.333em;
+  border: 1px solid gray;
+  display: block;
+}
+
+a.command:hover {
+  border: 1px solid black;
+  background: gray;
+}
 
 .node {
   stroke: #eef;
