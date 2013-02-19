@@ -118,7 +118,30 @@ $(function() {
     // Update links, creating svg:line elements for each.
     link = link.data(links);
     link.enter().insert("line", ".node")
-        .attr("class", "link");
+        .attr("class", "link")
+
+        // Widen links when you mouseover them.
+        .on("mouseover", function(d) {
+          d3.select(this).transition()
+            .delay(0)
+            .duration(300)
+            .style("stroke-width", "20px");
+        })
+        .on("mouseout", function(d) {
+          d3.select(this).transition()
+            .delay(0)
+            .duration(300)
+            .style("stroke-width", "3.5px");
+        })
+
+        .on("click", function(d) {
+          // When you click on a link the link's object is put
+          // onto the xerblin interpreter stack.
+          interpreter[0] = xerblin.push(interpreter[0], d);
+
+          // Then we re-draw the stack so you can see it.
+          draw();
+        })
 
     // Update nodes, creating svg:circle elements for each and setting up
     // the mouse bindings.
