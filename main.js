@@ -21,6 +21,12 @@ var belief_list = ['adequacy', 'anaseismic', 'antic', 'birdnester', 'brast', 'ci
 // name.
 var beliefs = {}
 
+
+function make_belief_object(name) {
+  return {name: name, radius: 15, kind: "belief"};
+}
+
+
 // This data array is what we will pass to the D3 Force Layout to use as
 // its data for drawing the beliefs.  By creating a whole object we can
 // store additional information (such as the x and y coorinates of the
@@ -29,9 +35,7 @@ var data = _.map(belief_list, function(d) {
 
   // Create an object for the belief (the x and y attributes are added
   // later by the Force layout.)
-  var it = {name: d,
-            radius: 15,
-            kind: "belief"};
+  var it = make_belief_object(d);
 
   // Record the object in the beliefs object so we can access it later by
   // its name.
@@ -239,6 +243,7 @@ $(function() {
     return I;
   });
 
+  // This function is used to update a node after changing its radius.
   function redraw_one_node_given_its_data(d) {
     node.filter(function(node_d) { return d === node_d; })
       .transition()
@@ -263,6 +268,26 @@ $(function() {
     return I;
   });
 
+  // Command word to create a new belief node.
+  interpreter[1] = xerblin.insert(interpreter[1], "create_belief",
+  function create_belief(I) {
+    var belief_name = $("#new_belief").val();
+    $("#new_belief").val("");
+    if (belief_name.length > 0) {
+      var new_belief = make_belief_object(belief_name);
+      data.push(new_belief);
+      return [[new_belief, I[0]], I[1]];
+    }
+    return I;
+  });
+
+  // Hitting enter on the form triggers "create_belief" command word.
+  $("form").submit(function(){
+    interpreter = xerblin.interpret(interpreter, ["create_belief"]);
+    restart();
+    draw();
+    return false;
+  });
 
   // This is the initial call to start animating the SVG on first load.
   restart();
