@@ -29,7 +29,9 @@ var data = _.map(belief_list, function(d) {
 
   // Create an object for the belief (the x and y attributes are added
   // later by the Force layout.)
-  var it = {name:d, kind:"belief"};
+  var it = {name: d,
+            radius: 15,
+            kind: "belief"};
 
   // Record the object in the beliefs object so we can access it later by
   // its name.
@@ -148,8 +150,8 @@ $(function() {
     node = node.data(data);
     node.enter().append("circle")
         .attr("class", "node")
-        .attr("r", 15)
-        .attr("title",  function(d) { return d.name; })
+        .attr("r", function(d) { return d.radius; })
+        .attr("title", function(d) { return d.name; })
         .style("fill", "#0D94D0")
         .on("mouseover", function(d) {
           d3.select(this).style("fill", "#8e6");
@@ -209,11 +211,18 @@ $(function() {
 
   // Command words to lengthen and shorten a link between two beliefs.
   //
-  // This is a helper that returns a Boolean indocating if a thing is a link.
+  // This is a helper that returns a Boolean indicating if a thing is a link.
   function is_link(link) {
     return (_.isObject(link) &&
             !_.isUndefined(link.kind) &&
             link.kind == "link");
+  }
+
+  // Return a Boolean indicating if a thing is a belief.
+  function is_belief(belief) {
+    return (_.isObject(belief) &&
+            !_.isUndefined(belief.kind) &&
+            belief.kind == "belief");
   }
 
   interpreter[1] = xerblin.insert(interpreter[1], "increase_distance",
@@ -229,6 +238,31 @@ $(function() {
     if (is_link(link)) { link.distance *= 0.9; }
     return I;
   });
+
+  function redraw_one_node_given_its_data(d) {
+    node.filter(function(node_d) { return d === node_d; })
+      .transition()
+      .delay(0)
+      .duration(150)
+      .attr("r", function(d) { return d.radius; });
+  }
+
+  interpreter[1] = xerblin.insert(interpreter[1], "increase_radius",
+  function increase_radius(I) {
+    var belief = I[0][0];
+    if (is_belief(belief)) { belief.radius *= 1.1; }
+    redraw_one_node_given_its_data(belief);
+    return I;
+  });
+
+  interpreter[1] = xerblin.insert(interpreter[1], "decrease_radius",
+  function decrease_radius(I) {
+    var belief = I[0][0];
+    if (is_belief(belief)) { belief.radius *= 0.9; }
+    redraw_one_node_given_its_data(belief);
+    return I;
+  });
+
 
   // This is the initial call to start animating the SVG on first load.
   restart();
