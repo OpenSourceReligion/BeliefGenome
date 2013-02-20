@@ -1,0 +1,27 @@
+
+File manifest:
+
+This is a simple draft demo for the Belief Genome project.
+── draft
+
+The main HTML, CSS, and JS files
+   ├── index.html
+   ├── main.js
+   ├── site.css
+
+This is an extensible command interpreter.
+   ├── xerblin.js
+
+A utility file with code to "render" the Xerblin Stack as HTML.
+   ├── render_stack.js
+
+Javascript dependencies in minified form. (I keep copies of these
+here to make it easier for offline development.)
+   ├── d3.v3.min.js
+   ├── jquery.min.js
+   ├── underscore-min.js
+
+A few bits of leftover helper code to generate random word lists.
+   ├── belief_list.js
+   └── belief_list.py
+
