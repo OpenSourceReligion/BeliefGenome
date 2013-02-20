@@ -112,7 +112,15 @@
     return I;
   }
 
-  xerblin.interpret = function interpret(I, command) {
+  function enstacken(I, body) {
+    var ens = body.slice(1);
+    var stack = _.reduce(ens, function(stk, item) {
+      return [item, stk];
+    }, I[0]);
+    return [stack, I[1]];
+  }
+
+  xerblin.raw_interpret = function raw_interpret(I, command) {
     return _.reduce(command, function(interpreter, word) {
       var stack = interpreter[0], dictionary = interpreter[1];
       var n = Number(word);
@@ -129,6 +137,16 @@
       func = xerblin.get(dictionary, word);
       return apply_func(interpreter, func);
     }, I);
+  }
+
+  xerblin.interpret = function interpret(I, command) {
+    var result;
+    try {
+      result = xerblin.raw_interpret(I, command);
+    } catch(e) {
+      result = I;
+    }
+    return result;
   }
 
   var library = {
@@ -243,6 +261,16 @@
       var b = [handle_branch, t[0], t[1]];
       stack = [b, t[2]];
       return [stack, I[1]];
+    },
+
+    NewEnstackener: function NewEnstackener(I) {
+      var stack = I[0];
+      var n = stack[0];
+      stack = stack[1];
+      var t = xerblin.pop(stack, n);
+      stack = t.pop();
+      t.unshift(enstacken);
+      return [[t, stack], I[1]];
     },
 
   /*
