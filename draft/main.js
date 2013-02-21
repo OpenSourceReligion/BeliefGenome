@@ -13,7 +13,7 @@ var width = 1000, height = 618;
 // to stand in for a list of beliefs.  Later we'll not only use more
 // appropriate words but also add the ability to load beliefs and links
 // and such from a server.
-var belief_list = ['adequacy', 'anaseismic', 'antic', 'birdnester', 'brast', 'cincholoiponic', 'commandeers', 'crayonist', 'cryptopyrrole', 'deconcentrate', 'dicyclist', 'discussant', 'dissoluble', 'dwellers', 'emulate', 'episyntheton', 'erichtoid', 'farrandly', 'glucosine', 'googul', 'handful', 'hierarchizing', 'holosomatous', 'hydrops', 'incurability', 'jackstones', 'limacine', 'nanigo', 'neontology', 'neutralists', 'nitrogenate', 'nondevelopment', 'oldwives', 'peroneus', 'powerplants', 'prologuised', 'shagging', 'simial', 'speedfully', 'tabernae', 'tartronate', 'tolualdehyde', 'trinketed', 'twinkling', 'ulorrhagia', 'undignified', 'unfatty', 'untrowed', 'zimbaloon']
+var belief_list = ['adequacy', 'antic', 'crayonist', 'cyclist', 'dwellers', 'emulate', 'episyntheton', 'erichtoid', 'hierarchizing', 'holosomatous', 'neontology', 'neutralists', 'oldwives', 'tabernae', 'twinkling', 'undignified', 'untrowed'];
 
 // This structure serves as a map from belief names to the actual belief
 // objects we are about to create for each belief/word in the belief_list
@@ -81,7 +81,7 @@ $(function() {
     // Set the charge to a comfortable distance. (We could bring this
     // value out into a named variable but there's not much point as it's
     // only set here.)
-    .charge(-120)
+    .charge(function (d) { return  -120 - 4.0 * d.radius; })
 
     // When links are created they are given a distance value and this
     // takes care of setting the link distance by the links object's
